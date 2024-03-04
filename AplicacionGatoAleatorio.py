@@ -67,3 +67,15 @@ def Checar(EJ):
             return False
     #La funcion devuelve un True si detecta que acabo el juego, de lo contraria devuelve un False y el juego continua
    
+
+#La funcion jugada se encarga de realizar la jugada del computador, checa cuales espacios hay en blanco en el tablero y escoge uno al azar para realizar su tirada
+def Jugada(EJ):
+    auxiliar = [] #lista donde se guardan las posibles jugadas
+    for i in range(0,9):
+        if EJ[i] == 0 : #se busca y agrega a la lista el espacio
+            auxiliar.append(i)
+    try: 
+        EJ[random.choice(auxiliar)] = 2 #escoge la jugada al azar haciendo uso de la funcion random.choice()
+    except:
+        pass
+    
