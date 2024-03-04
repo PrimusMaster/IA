@@ -45,3 +45,25 @@ def Imprimir(EJ):
                 for j in range(0,3):
                     print(aux5, end = "")
                 print("\n")
+                
+
+#la funcion checar se encarga de saber si el juego llego a un punto final verificando las 8 posiciones de victoria
+def Checar(EJ):
+    #este if es para las posiciones de victoria del jugador
+    if (EJ[0] == 1 and EJ[1] == 1 and EJ[2] == 1) or (EJ[3] == 1 and EJ[4] == 1 and EJ[5] == 1) or (EJ[6] == 1 and EJ[7] == 1 and EJ[8] == 1) or (EJ[0] == 1 and EJ[3] == 1 and EJ[6] == 1) or (EJ[1] == 1 and EJ[4] == 1 and EJ[7] == 1) or (EJ[2] == 1 and EJ[5] == 1 and EJ[8] == 1) or (EJ[0] == 1 and EJ[4] == 1 and EJ[8] == 1) or (EJ[2] == 1 and EJ[4] == 1 and EJ[6] == 1):
+        print("El ganador es el jugador")
+        return True
+    #este elif es para las posiciones de victoria de la computadora
+    elif (EJ[0] == 2 and EJ[1] == 2 and EJ[2] == 2) or (EJ[3] == 2 and EJ[4] == 2 and EJ[5] == 2 ) or (EJ[6] == 2 and EJ[7] == 2 and EJ[8] == 2) or (EJ[0] == 2 and EJ[3] == 2 and EJ[6] == 2) or (EJ[1] == 2 and EJ[4] == 2 and EJ[7] == 2) or (EJ[2] == 2 and EJ[5] == 2 and EJ[8] == 2) or (EJ[0] == 2 and EJ[4] == 2 and EJ[8] == 2) or (EJ[2] == 2 and EJ[4] == 2 and EJ[6] == 2):
+        print("El ganador es la computadora")
+        return True
+    #Este else es por si no se llego a la victoria de ninguno de los 2
+    else:
+        #este ultimo if de la funcion checa si todavia hay espacio para una jugada, si no lo hay lo marca como empate porque no hay otro movimiento disponible
+        if Espaciosdisponibles == 0:
+            print("Empate")
+            return True
+        else:
+            return False
+    #La funcion devuelve un True si detecta que acabo el juego, de lo contraria devuelve un False y el juego continua
+   
