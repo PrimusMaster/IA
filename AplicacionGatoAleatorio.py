@@ -79,3 +79,28 @@ def Jugada(EJ):
     except:
         pass
     
+
+#Este es el esqueleto principal del programa
+print("El jugador es representado con X y la computadora con O") #da un mensaje inicial el cual indica la representacion de cada uno       
+while True: #El while se encarga de mantener en ciclo el programa para el juego
+    Imprimir(Estadodejuego) #Imprime un primer tablero vacio o el tablero con la ultima jugada en un ciclo posterior
+    
+    movimiento = int(input("\n Selecciona una casilla para hacer un movimento(numerada del 1 al 9):")) #da al jugador el primer movimiento y castea la respuesta a un int
+    if movimiento >= 1 and movimiento <= 9: #Checa que sea una jugada legal
+        if Estadodejuego[movimiento-1] == 0: #Verifica que la jugada es en un espacio vacio, de lo contrario marca error
+            Estadodejuego[movimiento-1] = 1 #guarda la jugada 
+            Espaciosdisponibles = Estadodejuego.count(0) #Verifica el numero de espacios disponibles
+            resultado = Checar(Estadodejuego) #Checa si  no se llego a un final en el juego
+            if resultado == True:  #Si detecta un final rompe el ciclo while para acabar el programa
+                Imprimir(Estadodejuego) #Antes de acabar imprime el resultado final
+                break
+            Jugada(Estadodejuego) #Aqui es donde la computadora hace su jugada
+            Espaciosdisponibles = Estadodejuego.count(0) 
+            resultado = Checar(Estadodejuego)
+            if resultado == True:
+                Imprimir(Estadodejuego)
+                break
+        else:
+            print("Casilla ya seleccionada")
+    else:
+        print("Movimiento invalido")
