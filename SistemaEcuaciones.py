@@ -1,3 +1,5 @@
+#Bonilla Jalomo Daniel
+#Castillo Sanchez Emilio
 #Sistema de ecuaciones, el ultimo valor es el valor de la igualdad de su correspondiente acuacion
 ec1 = [3,2,1,1]
 ec2 = [5,3,4,2]
