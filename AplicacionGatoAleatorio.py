@@ -1,3 +1,5 @@
+#Bonilla Jalomo Daniel
+#Castillo Sanchez Emilio
 import random
 
 #Se establecen estas 5 variables auxiliares que ayudan a generar la interfaz de juego
