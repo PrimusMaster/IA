@@ -162,10 +162,10 @@ if __name__ == "__main__":
     if solved:
         print("Maze Solved!")
         for x, y, px, py in path:
-            if r_maze[x][y] != 'S' and r_maze[px][py] != 'S':
-                r_maze[px][py] = '*'
             if r_maze[x][y] == '2':
                 r_maze[x][y] = '0'
+            if r_maze[x][y] != 'S' and r_maze[px][py] != 'S':
+                r_maze[px][py] = '*'
         for row in r_maze:
             print("".join(row))
     else:
