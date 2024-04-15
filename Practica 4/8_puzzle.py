@@ -12,8 +12,12 @@ def BuscarSolucion(Posicion):
     nodos_camino.append(nodoInicial)
     nodos_camino
     while (not solucionado) and len(nodos_camino)!=0:
+        nodo = nodos_camino.pop()
+        nodos_visitados.append(nodo)
+
         if Posicion == solucion:
-            break
+            solucionado = True
+            return nodos_camino
         else:
             for i in range(0,9):
                 if Posicion[i] == 0:
@@ -28,7 +32,7 @@ def BuscarSolucion(Posicion):
 
 if __name__ == "__main__":
     Problema = [0,1,2,3,4,5,6,7,8]
-    BuscarSolucion(solucion)
+    BuscarSolucion(Problema)
     
     
     
