@@ -1,6 +1,8 @@
 #Bonilla Jalomo Daniel
 #Castillo Sanchez Emilio
 import random
+from arbol import Nodo
+
 
 #Se establecen estas 5 variables auxiliares que ayudan a generar la interfaz de juego
 aux1 = "   "
@@ -68,27 +70,48 @@ def Checar(EJ):
     #La funcion devuelve un True si detecta que acabo el juego, de lo contraria devuelve un False y el juego continua
 
 def BuscarSolucion(EJ):
+    solucionado=False
+    nodos_visitados=[]
+    nodoInicial = Nodo(EJ)
+    numiteraciones=0
+    nodos_camino=[]
+
+    nodos_camino.append(nodoInicial)
+
+    while not solucionado and len(nodos_camino)!=0:
+        nodo = nodos_camino.pop()
+        posibles = nodo.get_datos()
+        caminos_posibles = []
+        for i in range(0,8):
+            if posibles[i] == 0:
+                posibles[i] = 2
+                caminos_posibles.append(Nodo(posibles))
+                EJaux = EJ
+        
+                
 
 
 if __name__ == "__main__":
     Imprimir(Estadodejuego) #Imprime un primer tablero vacio o el tablero con la ultima jugada en un ciclo posterior
     
-    movimiento = int(input("\n Selecciona una casilla para hacer un movimento(numerada del 1 al 9):")) #da al jugador el primer movimiento y castea la respuesta a un int
-    if movimiento >= 1 and movimiento <= 9: #Checa que sea una jugada legal
-        if Estadodejuego[movimiento-1] == 0: #Verifica que la jugada es en un espacio vacio, de lo contrario marca error
-            Estadodejuego[movimiento-1] = 1 #guarda la jugada 
-            Espaciosdisponibles = Estadodejuego.count(0) #Verifica el numero de espacios disponibles
-            resultado = Checar(Estadodejuego) #Checa si  no se llego a un final en el juego
-            if resultado == True:  #Si detecta un final rompe el ciclo while para acabar el programa
-                Imprimir(Estadodejuego) #Antes de acabar imprime el resultado final
-            
-            Espaciosdisponibles = Estadodejuego.count(0) 
-            resultado = Checar(Estadodejuego)
-            if resultado == True:
-                Imprimir(Estadodejuego)
-                break
+    while True:
+        movimiento = int(input("\n Selecciona una casilla para hacer un movimento(numerada del 1 al 9):")) #da al jugador el primer movimiento y castea la respuesta a un int
+        if movimiento >= 1 and movimiento <= 9: #Checa que sea una jugada legal
+            if Estadodejuego[movimiento-1] == 0: #Verifica que la jugada es en un espacio vacio, de lo contrario marca error
+                Estadodejuego[movimiento-1] = 1 #guarda la jugada 
+                Espaciosdisponibles = Estadodejuego.count(0) #Verifica el numero de espacios disponibles
+                resultado = Checar(Estadodejuego) #Checa si  no se llego a un final en el juego
+                if resultado != 2:  #Si detecta un final rompe el ciclo while para acabar el programa
+                    Imprimir(Estadodejuego) #Antes de acabar imprime el resultado final
+                    break
+                nodo = BuscarSolucion(Estadodejuego)
+                Espaciosdisponibles = Estadodejuego.count(0) 
+                resultado = Checar(Estadodejuego)
+                if resultado != 2:
+                    Imprimir(Estadodejuego)
+                    break
+            else:
+                print("Casilla ya seleccionada")
         else:
-            print("Casilla ya seleccionada")
-    else:
-        print("Movimiento invalido")
+            print("Movimiento invalido")
     nodo_Solucion = BuscarSolucion(Estadodejuego)
