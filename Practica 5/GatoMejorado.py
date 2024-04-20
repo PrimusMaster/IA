@@ -78,16 +78,19 @@ def BuscarSolucion(EJ):
 
     nodos_camino.append(nodoInicial)
 
-    while not solucionado and len(nodos_camino)!=0:
-        nodo = nodos_camino.pop()
-        posibles = nodo.get_datos()
-        caminos_posibles = []
-        for i in range(0,8):
-            if posibles[i] == 0:
-                posibles[i] = 2
-                caminos_posibles.append(Nodo(posibles))
-                EJaux = EJ
-        
+    nodo = nodos_camino.pop()
+    posibles = nodo.get_datos()
+    aux = posibles
+    caminos_posibles = []
+    for i in range(0,8):
+        if posibles[i] == 0:
+            aux[i] = 2
+            caminos_posibles.append(Nodo(aux))
+            aux = posibles
+    nodo.set_hijos(caminos_posibles)
+
+    return nodo
+
                 
 
 
