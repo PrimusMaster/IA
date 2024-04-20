@@ -27,11 +27,7 @@ class Nodo:
     def get_datos(self):
         return self.datos
 
-    def set_valor(self):
-        valor = 0
-        for n in range(0,8):
-            if self.datos[n] == n +1:
-                valor += 1
+    def set_valor(self, valor):
         self.valor = valor
 
 
