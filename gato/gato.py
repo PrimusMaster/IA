@@ -4,6 +4,9 @@ import platform
 import time
 from os import system
 
+"""
+Se definen tanto a los humanos como a la computadora, ademas se usa una matriz para representar el tablero de juego
+"""
 HUMANO = -1
 COMP = +1
 tabla = [
@@ -16,6 +19,7 @@ tabla = [
 def evaluar(EstadoTabla): 
     """
     :return: +1 si la compu gana; -1 si el humano gana; 0 empate
+    esto es para ser usado en el minmax y no para revisar si se ha ganado el juego
     """
     if victoria(EstadoTabla, COMP):
         puntos = +1
@@ -29,8 +33,8 @@ def evaluar(EstadoTabla):
 
 def victoria(EstadoTabla, jugador):
     """
-    Se comprueba si alguien gano
-    jugador: es el humano o la computadora
+    Se comprueba si alguien gano al completar un conjunto de tres en fila, columna o diagonal
+    jugador se refiere tanto al humano como a la computadora
     """
     win_state = [
         [EstadoTabla[0][0], EstadoTabla[0][1], EstadoTabla[0][2]],
@@ -57,7 +61,7 @@ def game_over(state):
 
 def posicionesVacias(state):
     """
-    para saber cuales posiciones estan vacias
+    para saber cuales posiciones estan vacias y pueden ser ocupadas por el jugador o la compu
     """
     posiciones = []
 
@@ -71,7 +75,7 @@ def posicionesVacias(state):
 
 def validarPosicion(x, y):
     """
-    para saber que eleccion es valida
+    para saber que la posicion elegida es valida
     """
     if [x, y] in posicionesVacias(tabla):
         return True
@@ -81,7 +85,7 @@ def validarPosicion(x, y):
 
 def setMovimineto(x, y, player):
     """
-    llenar la posicion en el tablero
+    llenar la posicion en el tablero despues de validar que es una eleccion aceptable porque aun no esta ocupado dicho lugar
     """
     if validarPosicion(x, y):
         tabla[x][y] = player
@@ -94,6 +98,9 @@ def minimax(EstadoTabla, profundidad, jugador):
     """
     (0 <= profundidad <= 9),
     retorna una lista con [mejor fila, mejor columna, mejor puntiacion]
+    Primero se revisa si se trata de la computadora o el jugador para saber que movimientos son mejores
+    Despues se revisa si se ha acabado la partida.
+    Si ese no es el caso entonces se va explorando el arbol de forma recursiva para encontrar la mejor opcion
     """
     if jugador == COMP:
         mejorOpcion = [-1, -1, -infinity]
@@ -121,6 +128,9 @@ def minimax(EstadoTabla, profundidad, jugador):
     return mejorOpcion
 
 def dibujarTabla(EstadoTabla, eleccionComputadora, eleccionHumano):
+    """
+    eleccionHumano y eleccionComputadora, son para poner X y O, lo demas solo es para hacer la tablita y se vea bonito
+    """
     simboloEleccion = {
         -1: eleccionHumano,
         +1: eleccionComputadora,
@@ -137,6 +147,10 @@ def dibujarTabla(EstadoTabla, eleccionComputadora, eleccionHumano):
 
 
 def turnoTerminator(eleccionComputadora, eleccionHumano):
+    """
+    Turno de la compu, se revisa si ya se acabo el juego, si este no es el caso entonces se dibuja la HUD
+    Si es el primer turno se elije una posicion predefinida, si no, se hace el minmax y se pone en la posicion
+    """
     profundidad = len(posicionesVacias(tabla))
     if profundidad == 0 or game_over(tabla):
         return
@@ -157,6 +171,10 @@ def turnoTerminator(eleccionComputadora, eleccionHumano):
 
 
 def turnoHumano(eleccionComputadora, eleccionHumano):
+    """
+    Se revisa si se acabo el juego, si este no es el caso entonces se le pide al usuario que ingrese una posicion, si esta ocupada debe de elejir otra.
+    
+    """
     profundidad = len(posicionesVacias(tabla))
     if profundidad == 0 or game_over(tabla):
         return
@@ -190,10 +208,12 @@ def turnoHumano(eleccionComputadora, eleccionHumano):
 
 def main():
     system('cls')
+    #El humano elige el simbolo que quiere usar y si va primero o no
     eleccionHumano = ''  # X o O
     eleccionComputadora = ''  # X o O
     quienVaPrimero = ''
 
+    #Por si meten alguna opcion no valida para el simbolo y el ir primero o no
     while eleccionHumano != 'O' and eleccionHumano != 'X':
         try:
             print('')
@@ -219,6 +239,7 @@ def main():
         except (KeyError, ValueError):
             print('Opcion no valido')
 
+    #Se continuac el juego hasta que alguien gane o no haya mas movimientos disponibles osea un empate
     while len(posicionesVacias(tabla)) > 0 and not game_over(tabla):
         if quienVaPrimero == 'N':
             turnoTerminator(eleccionComputadora, eleccionHumano)
@@ -227,6 +248,7 @@ def main():
         turnoHumano(eleccionComputadora, eleccionHumano)
         turnoTerminator(eleccionComputadora, eleccionHumano)
 
+    #Se imprimen los mensajes de vitoria o empate junto con la trablita
     if victoria(tabla, HUMANO):
         system('cls')
         print(f'Humano [{eleccionHumano}]')
@@ -240,7 +262,7 @@ def main():
     else:
         system('cls')
         dibujarTabla(tabla, eleccionComputadora, eleccionHumano)
-        print('DRAW!')
+        print('EMPATE!')
 
     exit()
 
