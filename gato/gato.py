@@ -121,11 +121,6 @@ def minimax(EstadoTabla, profundidad, jugador):
     return mejorOpcion
 
 def dibujarTabla(EstadoTabla, eleccionComputadora, eleccionHumano):
-    """
-    Print the board on console
-    :param state: current state of the board
-    """
-
     simboloEleccion = {
         -1: eleccionHumano,
         +1: eleccionComputadora,
@@ -142,13 +137,6 @@ def dibujarTabla(EstadoTabla, eleccionComputadora, eleccionHumano):
 
 
 def turnoTerminator(eleccionComputadora, eleccionHumano):
-    """
-    It calls the minimax function if the depth < 9,
-    else it choices a random coordinate.
-    :param c_choice: computer's choice X or O
-    :param h_choice: human's choice X or O
-    :return:
-    """
     profundidad = len(posicionesVacias(tabla))
     if profundidad == 0 or game_over(tabla):
         return
@@ -169,12 +157,6 @@ def turnoTerminator(eleccionComputadora, eleccionHumano):
 
 
 def turnoHumano(eleccionComputadora, eleccionHumano):
-    """
-    The Human plays choosing a valid move.
-    :param c_choice: computer's choice X or O
-    :param h_choice: human's choice X or O
-    :return:
-    """
     profundidad = len(posicionesVacias(tabla))
     if profundidad == 0 or game_over(tabla):
         return
@@ -208,43 +190,36 @@ def turnoHumano(eleccionComputadora, eleccionHumano):
 
 
 def main():
-    """
-    Main function that calls all functions
-    """
     system('cls')
-    eleccionHumano = ''  # X or O
-    eleccionComputadora = ''  # X or O
-    quienVaPrimero = ''  # if human is the first
+    eleccionHumano = ''  # X o O
+    eleccionComputadora = ''  # X o O
+    quienVaPrimero = ''
 
-    # Human chooses X or O to play
     while eleccionHumano != 'O' and eleccionHumano != 'X':
         try:
             print('')
-            eleccionHumano = input('Choose X or O\nChosen: ').upper()
+            eleccionHumano = input('X o O\nSe eliguio: ').upper()
         except (EOFError, KeyboardInterrupt):
             print('Bye')
             exit()
         except (KeyError, ValueError):
-            print('Bad choice')
+            print('Opcion no valido')
 
-    # Setting computer's choice
     if eleccionHumano == 'X':
         eleccionComputadora = 'O'
     else:
         eleccionComputadora = 'X'
 
-    # Human may starts first
     system('cls')
-    while quienVaPrimero != 'Y' and quienVaPrimero != 'N':
+    while quienVaPrimero != 'S' and quienVaPrimero != 'N':
         try:
-            quienVaPrimero = input('First to start?[y/n]: ').upper()
+            quienVaPrimero = input('Quieres ir primero?[s/n]: ').upper()
         except (EOFError, KeyboardInterrupt):
             print('Bye')
             exit()
         except (KeyError, ValueError):
-            print('Bad choice')
+            print('Opcion no valido')
 
-    # Main loop of this game
     while len(posicionesVacias(tabla)) > 0 and not game_over(tabla):
         if quienVaPrimero == 'N':
             turnoTerminator(eleccionComputadora, eleccionHumano)
@@ -256,12 +231,12 @@ def main():
     # Game over message
     if victoria(tabla, HUMANO):
         system('cls')
-        print(f'Human turn [{eleccionHumano}]')
+        print(f'Humano [{eleccionHumano}]')
         dibujarTabla(tabla, eleccionComputadora, eleccionHumano)
         print('YOU WIN!')
     elif victoria(tabla, COMP):
         system('cls')
-        print(f'Computer turn [{eleccionComputadora}]')
+        print(f'Compu [{eleccionComputadora}]')
         dibujarTabla(tabla, eleccionComputadora, eleccionHumano)
         print('YOU LOSE!')
     else:
