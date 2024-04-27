@@ -134,22 +134,34 @@ def minimax_poda_alfa(EstadoTabla, profundidad, jugador,alfa,beta):
         puntuacion = evaluar(EstadoTabla)
         return [-1, -1, puntuacion]
 
-    if 
+    if jugador == COMP:
         for posicion in posicionesVacias(EstadoTabla):
             x, y = posicion[0], posicion[1]
             EstadoTabla[x][y] = jugador
-            puntuacion = minimax(EstadoTabla, profundidad - 1, -jugador)
+            puntuacion = minimax_poda_alfa(EstadoTabla, profundidad - 1, -jugador,alfa,beta)
             EstadoTabla[x][y] = 0
             puntuacion[0], puntuacion[1] = x, y
 
-            if jugador == COMP:
-                if puntuacion[2] > mejorOpcion[2]:
-                    mejorOpcion = puntuacion  # max
-            else:
-                if puntuacion[2] < mejorOpcion[2]:
-                    mejorOpcion = puntuacion  # min
+            if puntuacion[2] > alfa[2]:
+                alfa = puntuacion
+            if alfa[2] >= beta[2]:
+                return alfa
+            return alfa
+    else:
+        for posicion in posicionesVacias(EstadoTabla):
+            x, y = posicion[0], posicion[1]
+            EstadoTabla[x][y] = jugador
+            puntuacion = minimax_poda_alfa(EstadoTabla, profundidad - 1, -jugador)
+            EstadoTabla[x][y] = 0
+            puntuacion[0], puntuacion[1] = x, y
 
-    return mejorOpcion
+            if puntuacion[2] < beta[2] :
+                beta = puntuacion
+            if:
+                if alfa[2] >= beta[2]:
+                    return beta
+            return beta
+
 
 
 def dibujarTabla(EstadoTabla, eleccionComputadora, eleccionHumano):
@@ -193,7 +205,9 @@ def turnoTerminator(eleccionComputadora, eleccionHumano):
         x = choice([0, 1, 2])
         y = choice([0, 1, 2])
     else:
-        movimiento = minimax(tabla, profundidad, COMP)
+        alfa = []
+        beta = []
+        movimiento = minimax_poda_alfa(tabla, profundidad, COMP, alfa, beta)
         x, y = movimiento[0], movimiento[1]
 
     setMovimineto(x, y, COMP)
