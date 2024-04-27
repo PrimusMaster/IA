@@ -161,7 +161,6 @@ def turnoHumano(eleccionComputadora, eleccionHumano):
     if profundidad == 0 or game_over(tabla):
         return
 
-    # Dictionary of valid moves
     movimiento = -1
     movimientos = {
         1: [0, 0], 2: [0, 1], 3: [0, 2],
@@ -228,7 +227,6 @@ def main():
         turnoHumano(eleccionComputadora, eleccionHumano)
         turnoTerminator(eleccionComputadora, eleccionHumano)
 
-    # Game over message
     if victoria(tabla, HUMANO):
         system('cls')
         print(f'Humano [{eleccionHumano}]')
