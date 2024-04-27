@@ -90,35 +90,6 @@ def setMovimineto(x, y, player):
         return False
 
 
-def minimax(EstadoTabla, profundidad, jugador):
-    """
-    (0 <= profundidad <= 9),
-    retorna una lista con [mejor fila, mejor columna, mejor puntiacion]
-    """
-    if jugador == COMP:
-        mejorOpcion = [-1, -1, -infinity]
-    else:
-        mejorOpcion = [-1, -1, +infinity]
-
-    if profundidad == 0 or game_over(EstadoTabla):
-        puntuacion = evaluar(EstadoTabla)
-        return [-1, -1, puntuacion]
-
-    for posicion in posicionesVacias(EstadoTabla):
-        x, y = posicion[0], posicion[1]
-        EstadoTabla[x][y] = jugador
-        puntuacion = minimax(EstadoTabla, profundidad - 1, -jugador)
-        EstadoTabla[x][y] = 0
-        puntuacion[0], puntuacion[1] = x, y
-
-        if jugador == COMP:
-            if puntuacion[2] > mejorOpcion[2]:
-                mejorOpcion = puntuacion  # max
-        else:
-            if puntuacion[2] < mejorOpcion[2]:
-                mejorOpcion = puntuacion  # min
-
-    return mejorOpcion
 
 def minimax_poda_alfa(EstadoTabla, profundidad, jugador,alfa,beta):
     """
@@ -133,7 +104,9 @@ def minimax_poda_alfa(EstadoTabla, profundidad, jugador,alfa,beta):
     if profundidad == 0 or game_over(EstadoTabla):
         puntuacion = evaluar(EstadoTabla)
         return [-1, -1, puntuacion]
-
+    """
+    Comprueaba si es el turno de la maquina o del humano para escoger si aplicar alfa o beta
+    """
     if jugador == COMP:
         for posicion in posicionesVacias(EstadoTabla):
             x, y = posicion[0], posicion[1]
